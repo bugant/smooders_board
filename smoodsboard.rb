@@ -1,14 +1,7 @@
 require 'rubygems'
-require 'yaml'
 require 'smoodit'
 
 class SmoodsBoard
-  def initialize
-    Smoodit.configure do |config|
-      config = YAML.load_file("smoodit_app.yml")
-    end
-  end
-
   def smooder_board_of mooders
     moods = {}
     moo = Smoodit.send(mooders.username.to_sym).smoods do |resp|
