@@ -9,14 +9,15 @@ if ARGV.length != 1
   exit
 end
 
-puts "Your FOLLOWING smoodsboard"
-board = SmoodsBoard.new.following_smoodsboard ARGV[0]
+smooder = ARGV[0]
+puts "#{smooder} FOLLOWING smoodsboard"
+board = SmoodsBoard.new.following_smoodsboard smooder
 board.each_pair do |mood, stuff|
   puts "#{mood.upcase}: #{stuff[:smooder].username} (#{stuff[:points]})"
 end
 
-puts "\nYour FOLLOWERS smoodsboard"
-board = SmoodsBoard.new.followers_smoodsboard ARGV[0]
+puts "\n#{smooder} FOLLOWERS smoodsboard"
+board = SmoodsBoard.new.followers_smoodsboard smooder
 board.each_pair do |mood, stuff|
   puts "#{mood.upcase}: #{stuff[:smooder].username} (#{stuff[:points]})"
 end
