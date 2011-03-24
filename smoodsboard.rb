@@ -4,24 +4,40 @@ require 'smoodit'
 class SmoodsBoard
   def smooder_board_of mooders
     moods = {}
-    moo = Smoodit.send(mooders.username.to_sym).smoods do |resp|
-      (1..resp.pages).each do |p|
-        resp.smoods(:page => p).each do |m|
+    pages = 0
+    
+    Smoodit.send(mooders.username.to_sym).smoods do |resp|
+      pages = resp.pages
+    end
+    
+    (1..pages).each do |p|
+      puts "#{mooders.username}'s smoods (page #{p} of #{pages})"
+      
+      Smoodit.send(mooders.username.to_sym).smoods(:page => p) do |resp|
+        resp.smoods.each do |m|
           moods[m.mood] = 0 if moods[m.mood].nil?
           moods[m.mood] += 1
         end
       end
     end
+    
     moods
   end
 
 
   def people_smoodsboard(you, kind)
     smoodboard = {}
-
+    pages = 0
+    
     Smoodit.send(you.to_sym).send(kind.to_sym) do |resp|
-      (1..resp.pages).each do |p|
-        resp.send(kind.to_sym, :page => p).each do |f|
+      pages = resp.pages
+    end
+    
+    (1..pages).each do |p|
+      puts "=== your #{kind} (page #{p} of #{pages}) ==="
+      
+      Smoodit.send(you.to_sym).send(kind.to_sym, :page => p) do |resp|
+        resp.send(kind.to_sym).each do |f|
           moods = smooder_board_of f
           moods.each_pair do |m,q|
             smoodboard[m] = {:smooder => f, :points => q} if smoodboard[m].nil? || smoodboard[m][:points] < q
@@ -29,6 +45,7 @@ class SmoodsBoard
         end
       end
     end
+    
     smoodboard
   end
 

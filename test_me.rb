@@ -1,7 +1,7 @@
 require File.expand_path("../smoodsboard", __FILE__)
 
 def usage
-  puts "test_me <smooder>"
+  puts "Usage: ruby test_me.rb <smooder>"
 end
 
 if ARGV.length != 1
@@ -9,14 +9,16 @@ if ARGV.length != 1
   exit
 end
 
-puts "Your FOLLOWING smoodsboard"
+result = "\nYour FOLLOWING smoodsboard"
 board = SmoodsBoard.new.following_smoodsboard ARGV[0]
 board.each_pair do |mood, stuff|
-  puts "#{mood.upcase}: #{stuff[:smooder].username} (#{stuff[:points]})"
+  result << "\n#{mood.upcase}: #{stuff[:smooder].username} (#{stuff[:points]})"
 end
 
-puts "\nYour FOLLOWERS smoodsboard"
+result << "\nYour FOLLOWERS smoodsboard"
 board = SmoodsBoard.new.followers_smoodsboard ARGV[0]
 board.each_pair do |mood, stuff|
-  puts "#{mood.upcase}: #{stuff[:smooder].username} (#{stuff[:points]})"
+  result << "#{mood.upcase}: #{stuff[:smooder].username} (#{stuff[:points]})"
 end
+
+puts result
