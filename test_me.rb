@@ -19,7 +19,7 @@ end
 result << "\n#{smooder} FOLLOWERS smoodsboard"
 board = SmoodsBoard.new.followers_smoodsboard ARGV[0]
 board.each_pair do |mood, stuff|
-  result << "#{mood.upcase}: #{stuff[:smooder].username} (#{stuff[:points]})"
+  result << "\n#{mood.upcase}: #{stuff[:smooder].username} (#{stuff[:points]})"
 end
 
 puts result
